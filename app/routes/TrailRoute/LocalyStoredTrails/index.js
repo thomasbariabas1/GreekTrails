@@ -9,15 +9,16 @@ import {StackNavigator,TabNavigator} from 'react-navigation';
 export default StackNavigator({
        LocallySavedTrails:{
            screen:TabNavigator({
+                   SsvedTrails: {
+                       screen: SsvedTrails,
+                   },
                    RecordedTrails: {
                        screen: RecordedTrails,
                    },
-                   SsvedTrails: {
-                       screen: SsvedTrails,
-                   }
+
                },
                {
-                   initialRouteName: 'RecordedTrails',
+                   initialRouteName: 'SsvedTrails',
                },
 
            )

@@ -8,6 +8,7 @@ import {
     StyleSheet
 } from 'react-native';
 import MapView from '../../../../../components/MapView'
+import {Header} from 'react-native-elements'
 import styles from './style'
 
 const mapStyles = StyleSheet.create({
@@ -23,10 +24,38 @@ const mapStyles = StyleSheet.create({
 })
 
 class RecordingView extends Component {
-    static navigationOptions = {
-        title: 'Recording',
-    };
+    static navigationOptions = ({navigation}) => {
+        const {params = {}} = navigation.state;
 
+        return ({
+            title: 'Recording',
+            header: <Header
+                leftComponent={{icon: 'menu', color: '#fff', onPress: () => navigation.navigate('DrawerToggle')}}
+                centerComponent={{ text: 'Record Trail', style: { color: '#fff' ,fontSize: 20,
+                    fontWeight: 'bold'} }}
+            />
+
+        })
+    }
+    state = { routeCoordinates: [] }
+    componentWillMount(){
+        navigator.geolocation.getCurrentPosition(
+            (position) =>{ alert(position)}
+            ,
+            (error) => alert(error.message),
+            {}
+        )
+
+
+        this.watchID = navigator.geolocation.watchPosition((position) => {
+            },
+            (error) => {},
+            {});
+    }
+
+    componentWillUnmount() {
+        navigator.geolocation.clearWatch(this.watchID);
+    }
     render() {
         return <View>
             <MapView styles={mapStyles}/>
@@ -34,6 +63,7 @@ class RecordingView extends Component {
         </View>
     }
 }
+
 
 
 

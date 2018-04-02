@@ -5,6 +5,8 @@ import React, {Component} from 'react';
 import {Provider} from 'react-redux';
 
 import store from './app/store'; //Import the store
+import {AppRegistry} from 'react-native'
+import Tracker from './app/services/Tracker'
 import  RootStack from './app/routes'
 
 export default class App extends Component {
@@ -17,3 +19,5 @@ export default class App extends Component {
         );
     }
 }
+
+AppRegistry.registerHeadlessTask('Tracker', () => Tracker)

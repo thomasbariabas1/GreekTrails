@@ -24,9 +24,8 @@ class Map extends Component {
 
     render() {
         const {polylines, points} = this.props
-        const initialRegion_latitude = points[0].coordinates[0].latitude
-        const initialRegion_longitude = points[0].coordinates[0].longitude
-
+        const initialRegion_latitude = points.length>0?points[0].coordinates[0].latitude:0
+        const initialRegion_longitude = points.length>0?points[0].coordinates[0].longitude:0
         return (
             <View style={this.props.styles.container}>
                 <MapView
@@ -41,13 +40,13 @@ class Map extends Component {
                     }}
                 >
                     {polylines.map((polyline, i) => {
-                        return <Polyline key={i + polyline} coordinates={polyline}/>
+                        return <Polyline key={i + polyline+new Date()} coordinates={polyline}/>
                     })}
 
                     {points.map((point, i) => {
                         if (this.props.customMarker) {
 
-                            return (point.coordinates.map(co => <Marker key={i + point.node.Title}
+                            return (point.coordinates.map(co => <Marker key={i + point.node.Title+new Date()}
                                                                         title={point.node.Title} coordinate={co}
                                                                         onCalloutPress={this.props.customMarker.onPress(point, i)}>
                                 <Callout>
@@ -56,7 +55,7 @@ class Map extends Component {
                             </Marker>))
                         } else {
 
-                            return point.coordinates.map(co => <Marker key={i + point.node.Title}
+                            return point.coordinates.map((co,index )=> <Marker key={index + point.node.Description+new Date()}
                                                                        title={point.node.Title}
                                                                        description={point.node.Description}
                                                                        coordinate={co}/>)
@@ -95,12 +94,7 @@ class Map extends Component {
 
 Map.defaultProps = {
     polylines: [],
-    points: [{
-        coordinates: [{
-            latitude: 0,
-            longitude: 0
-        }]
-    }],
+    points: [],
     styles: StyleSheet.create({
         container: {
             flex: 1,

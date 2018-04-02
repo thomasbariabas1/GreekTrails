@@ -49,17 +49,11 @@ const onSaveTrailToFavourite = (trail)=>async(dispatch,getState) =>{
 
         if (value !== null){
             if(value.filter(tr=>tr.node['Entity ID']===trail.node['Entity ID']).length>0) {
-                console.log('trail',trail)
 
 
                 value = value.filter(tr=> tr.node['Entity ID'] !== trail.node['Entity ID'])
-                console.log('value',value)
             } else {
-                console.log('value',value)
-
                 value.push(trail)
-
-                console.log('value',value)
 
             }
         }else{

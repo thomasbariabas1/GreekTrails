@@ -13,7 +13,7 @@ import CardView from '../../../../../components/CardView'
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MapView from "../../../../../components/MapView";
-import parserWKT from 'wellknown'
+import {geometriesFromTrail} from '../../../../../lib/utils'
 import {Header} from 'react-native-elements'
 
 class HomeView extends Component {
@@ -84,32 +84,9 @@ class HomeView extends Component {
     }
 
     render() {
-        const geometries = this.state.data.map(data => {
-
-                return {
-                    ...data,
-                    coordinates: parserWKT(data.node['Leaflet _trailstobechecked'] ?
-                        data.node['Leaflet _trailstobechecked'] :
-                        data.node.Leaflet_trails).geometries
-                }
-            }
-        )
-        const trailPolylines = geometries.map(trail => {
-            return trail.coordinates.filter(tr => tr.type === 'LineString').map(linestring => {
-                return linestring.coordinates.map(co => {
-                    return {latitude: co[1], longitude: co[0]}
-                })
-            })[0]
-        })
-        const trailPoints = geometries.map(trail => {
-            return {
-                ...trail, ...{
-                    coordinates: trail.coordinates.filter(tr => tr.type === 'Point').map(point => {
-                        return {latitude: point.coordinates[1], longitude: point.coordinates[0]}
-                    })
-                }
-            }
-        })
+        const geometries = geometriesFromTrail(this.state.data)
+        const trailPolylines = geometries.polylines
+        const trailPoints = geometries.points
 
         const customMarker = {
             onPress: this.onPress,

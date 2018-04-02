@@ -3,20 +3,27 @@
  */
 import React from 'react'
 import TrailRoute from './TrailRoute'
-import CustomDrawerItems from '../components/CustomDrawerItems'
-import { DrawerNavigator} from 'react-navigation';
+
+import CustomDrawer from '../components/CustomDrawer'
+import {DrawerNavigator} from 'react-navigation';
 
 export default DrawerNavigator(
     {
         Home: {
             screen: TrailRoute,
         },
+        LocalTrails: {
+            screen: ()=>{},
 
+        },
+        Recording: {
+            screen: ()=>{},
+
+
+        }
     },
     {
         initialRouteName: 'Home',
-        contentComponent: props => <CustomDrawerItems {...props} />
-
+        contentComponent: CustomDrawer
     },
-
 );

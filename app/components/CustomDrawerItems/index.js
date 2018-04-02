@@ -9,19 +9,17 @@ class CustomDrawerItems extends Component {
 
 
     render() {
-        const {items, activeItemKey} = this.props
+        const {item, activeItemKey,navigate} = this.props
 
         return (
-            <View style={{marginTop: 200}}>
-                {items.map(item => {
-                    return <Button key={item.routeName} onPress={() => {
+
+                <Button key={item.routeName} onPress={() => {
                         return activeItemKey !== item.routeName ?
-                            this.props.navigation.navigate(item.routeName) :
-                            this.props.navigation.navigate('DrawerClose')
+                           navigate(item.routeName) :
+                            navigate('DrawerClose')
                     }
                     } title={item.routeName}/>
-                })}
-            </View>
+
         )
     }
 }
