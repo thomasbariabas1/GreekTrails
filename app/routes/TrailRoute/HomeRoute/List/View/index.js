@@ -15,6 +15,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import MapView from "../../../../../components/MapView";
 import {geometriesFromTrail} from '../../../../../lib/utils'
 import {Header} from 'react-native-elements'
+
 import PopupDialog, { SlideAnimation } from 'react-native-popup-dialog';
 import Filters from '../../../../../components/Filters/HomeRouteListFilter'
 
@@ -23,15 +24,15 @@ const slideAnimation = new SlideAnimation({
     toValue:10
 });
 
-
-
 class HomeView extends Component {
     state = {
         data: [],
         trailView: 'list'
 
     }
+
     popup = {}
+
     static navigationOptions = ({navigation}) => {
         const {params = {}} = navigation.state;
 
@@ -62,6 +63,7 @@ class HomeView extends Component {
         this.props.setFavoriteTrails()
         this.props.navigation.setParams({
             onSetTrailView: this.onSetTrailView,
+
             trailView: this.state.trailView,
             popup:this.popup
         });
@@ -70,11 +72,13 @@ class HomeView extends Component {
     componentDidMount() {
         this.setState({
             data: this.props.data,
+
             filters:{}
         })
         this.props.navigation.setParams({
             popup:this.popup
         });
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -90,8 +94,10 @@ class HomeView extends Component {
         });
         this.setState({trailView: viewType})
     }
+
     onFilterChange = (filter) => {
         this.setState({filters:{...this.state.filters,...filter}})
+
     }
     onResultsViewChange = () => {
 
@@ -101,7 +107,9 @@ class HomeView extends Component {
         const geometries = geometriesFromTrail(this.state.data)
         const trailPolylines = geometries.polylines
         const trailPoints = geometries.points
+
         const {onFiltersChange,filters}=this.props
+
         const customMarker = {
             onPress: this.onPress,
             component: (data) =>
@@ -131,12 +139,14 @@ class HomeView extends Component {
             }
         ]
         return <View  style={{ flex: 1, flexDirection: 'column'}}>
+
             <PopupDialog
                 ref={(popupDialog) => { this.popup = popupDialog; }}
                 dialogAnimation={slideAnimation}
             >
                <Filters onChange={this.onFilterChange} values={this.state.filters}/>
             </PopupDialog>
+
             {this.state.trailView === 'list' ? <CardView onPress={this.onPress}
                                                          data={this.state.data}
                                                          onFavouriteTrailsSave={this.props.onSaveTrailToFavourite}

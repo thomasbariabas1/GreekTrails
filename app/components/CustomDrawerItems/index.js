@@ -4,6 +4,7 @@
 import React, {Component} from 'react'
 import {Button} from 'react-native-elements'
 import styles from './styles'
+    
 
 class CustomDrawerItems extends Component {
 
@@ -14,15 +15,15 @@ class CustomDrawerItems extends Component {
         return (
 
                 <Button key={item.routeName} buttonStyle={styles.drawerItem} raised small onPress={() => {
+
                         return activeItemKey !== item.routeName ?
                            navigate(item.routeName) :
                             navigate('DrawerClose')
                     }
                     } title={item.routeName}/>
+
         )
     }
 }
-
-
-
 export default CustomDrawerItems
+

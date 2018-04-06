@@ -10,6 +10,7 @@ constants.FETCH_TRAILS_PENDING = 'trails/FETCH_TRAILS_PENDING'
 constants.FETCH_TRAILS_SUCCESS = 'trails/FETCH_TRAILS_SUCCESS'
 constants.FETCH_TRAILS_FAILURE = 'trails/FETCH_TRAILS_FAILURE'
 constants.ON_SAVE_TRAIL_TO_FAVOURITE = 'trails/ON_SAVE_TRAIL_TO_FAVOURITE'
+
 constants.ON_FILTERS_CHANGE = 'trails/ON_FILTERS_CHANGE'
 
 const fetchTrailsPending = createAction(constants.FETCH_TRAILS_PENDING)
@@ -82,6 +83,7 @@ export const actions ={
 const initialState = {
         data:[],
         filters:{}
+
 }
 
 const reducer = (state=initialState,action)=>{
@@ -95,10 +97,14 @@ const reducer = (state=initialState,action)=>{
             return state
         case constants.ON_SAVE_TRAIL_TO_FAVOURITE:
             return merge(state,{favouriteTrails:action.payload})
+
         case constants.ON_FILTERS_CHANGE:
             return merge(state,{filters:{...state.filters,...action.payload}})
+
         default:
            return state
     }
 }
+
 export default reducer
+
